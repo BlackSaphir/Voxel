@@ -1,9 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class Block
 {
+    public enum Direction { north, east, south, west, up, down };
+    public struct Tile { public int x; public int y; }
+    const float tileSize = 0.25f;
+    public bool changed = true;
+
+
+
     // Constructor
     public Block()
     {
@@ -128,7 +137,6 @@ public class Block
         return meshData;
     }
 
-    public enum Direction { north, east, south, west, up, down };
 
     public virtual bool IsSolid(Direction direction)
     {
@@ -146,13 +154,10 @@ public class Block
                 return true;
             case Direction.down:
                 return true;
-            default:
-                return true;
         }
-        return false;
+        return false;   
     }
 
-    public struct Tile { public int x; public int y; }
 
     public virtual Tile TexturePosition(Direction direction)
     {
@@ -162,7 +167,6 @@ public class Block
         return tile;
     }
 
-    const float tileSize = 0.25f;
 
     
     public virtual Vector2[] FaceUVs(Direction direction)

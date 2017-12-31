@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    private Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize];
+    public Block[, ,] blocks = new Block[chunkSize, chunkSize, chunkSize];
     public static int chunkSize = 16;
     public bool update = true;
     public World world;
@@ -24,6 +24,19 @@ public class Chunk : MonoBehaviour
     {
         filter = gameObject.GetComponent<MeshFilter>();
         coll = gameObject.GetComponent<MeshCollider>();
+
+        blocks = new Block[chunkSize, chunkSize, chunkSize];
+
+        for (int x = 0; x < chunkSize; x++)
+        {
+            for (int y = 0; y < chunkSize; y++)
+            {
+                for (int z = 0; z < chunkSize; z++)
+                {
+                    blocks[x, y, z] = new BlockAir();
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -31,6 +44,7 @@ public class Chunk : MonoBehaviour
     {
         if (update)
         {
+            blocks[1, 1, 1] = new BlockGrass();
             update = false;
             UpdateChunk();
         }
@@ -110,5 +124,13 @@ public class Chunk : MonoBehaviour
         mesh.RecalculateNormals();
 
         coll.sharedMesh = mesh;
+    }
+
+    public void SetBlocksUnmodified()
+    {
+        foreach (Block block in blocks)
+        {
+            block.changed = false;
+        }
     }
 }

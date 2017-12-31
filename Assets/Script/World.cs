@@ -6,6 +6,12 @@ public class World : MonoBehaviour
 {
     public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
     public GameObject chunkPrefab;
+    public string worldName = "world";
+    public int newChunkX;
+    public int newChunkY;
+    public int newChunkZ;
+
+    public bool genChunk;
 
 
 	// Use this for initialization
@@ -26,7 +32,22 @@ public class World : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        if (genChunk)
+        {
+            genChunk = false;
+            WorldPos chunkPos = new WorldPos(newChunkX, newChunkY, newChunkZ);
+
+            Chunk chunk = null;
+
+            if (chunks.TryGetValue(chunkPos, out chunk))
+            {
+                DestroyChunk(chunkPos.x, chunkPos.y, chunkPos.z);
+            }
+            else
+            {
+                CreateChunk(chunkPos.x, chunkPos.y, chunkPos.z);
+            }
+        }
 	}
 
     //Instantiate Prefab, set chunks pos and add it to dictionary
@@ -43,6 +64,8 @@ public class World : MonoBehaviour
 
         // Add it to the chunks dictionary. Position = key
         chunks.Add(worldpos, newChunk);
+
+       
 
         for (int xi = 0; xi < 16; xi++)
         {
@@ -61,6 +84,9 @@ public class World : MonoBehaviour
                 }
             }
         }
+
+        newChunk.SetBlocksUnmodified();
+        Serialization.Load(newChunk);
     }
 
     public Chunk GetChunk(int x, int y, int z)
@@ -107,6 +133,27 @@ public class World : MonoBehaviour
         {
             chunk.SetBlock(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, block);
             chunk.update = true;
+
+            UpdateIfEqual(x - chunk.pos.x, 0, new WorldPos(x - 1, y, z));
+            UpdateIfEqual(x - chunk.pos.x, Chunk.chunkSize - 1, new WorldPos(x + 1, y, z));
+
+            UpdateIfEqual(y - chunk.pos.y, 0, new WorldPos(x, y + 1, z));
+            UpdateIfEqual(y - chunk.pos.y, Chunk.chunkSize - 1, new WorldPos(x, y + 1, z));
+
+            UpdateIfEqual(z - chunk.pos.z, 0, new WorldPos(x, y, z + 1));
+            UpdateIfEqual(z - chunk.pos.z, Chunk.chunkSize - 1, new WorldPos(x, y, z + 1));
+        }
+    }
+
+    void UpdateIfEqual(int value1, int value2, WorldPos pos)
+    {
+        if (value1 == value2)
+        {
+            Chunk chunk = GetChunk(pos.x, pos.y, pos.z);
+            if (chunk != null)
+            {
+                chunk.update = true;
+            }
         }
     }
 
@@ -116,7 +163,8 @@ public class World : MonoBehaviour
         Chunk chunk = null;
         if (chunks.TryGetValue(new WorldPos(x, y, z), out chunk))
         {
-            Object.Destroy(chunk.gameObject);
+            Serialization.SaveChunk(chunk);
+            UnityEngine.Object.Destroy(chunk.gameObject);
             chunks.Remove(new WorldPos(x, y, z));
         }
     }
