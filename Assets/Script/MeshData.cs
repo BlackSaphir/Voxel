@@ -11,7 +11,10 @@ public class MeshData
     public List<int> colliderTriangles = new List<int>();
     public bool useRenderDataForCollision;
 
-    public MeshData() {}
+    public MeshData()
+    {
+
+    }
 
     public void AddQuadTriangles()
     {
@@ -35,7 +38,7 @@ public class MeshData
     }
 
     // add to triangle list if(true) add to collider list
-    public void AddTriagnle(int tri)
+    public void AddTriangle(int tri)
     {
         triangles.Add(tri);
         if (useRenderDataForCollision)

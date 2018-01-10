@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 599226207}
   - component: {fileID: 599226206}
   - component: {fileID: 599226210}
+  - component: {fileID: 599226211}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -271,6 +272,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e047b7f3a7edf1c4b8371ab35de96b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &599226211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 599226205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec14847bb67796b49a945dd6aa647bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  world: {fileID: 1412091343}
 --- !u!1 &1412091342
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +294,7 @@ GameObject:
   - component: {fileID: 1412091344}
   - component: {fileID: 1412091343}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: World
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkPrefab: {fileID: 1925395888141682, guid: 4d66158fc5fd1024e8ddcea39e7dfc80,
     type: 2}
+  worldName: world
 --- !u!4 &1412091344
 Transform:
   m_ObjectHideFlags: 0

@@ -11,7 +11,8 @@ public class Chunk : MonoBehaviour
 {
     public Block[, ,] blocks = new Block[chunkSize, chunkSize, chunkSize];
     public static int chunkSize = 16;
-    public bool update = true;
+    public bool update = false;
+    public bool rendered;
     public World world;
     public WorldPos pos;
 
@@ -24,19 +25,6 @@ public class Chunk : MonoBehaviour
     {
         filter = gameObject.GetComponent<MeshFilter>();
         coll = gameObject.GetComponent<MeshCollider>();
-
-        blocks = new Block[chunkSize, chunkSize, chunkSize];
-
-        for (int x = 0; x < chunkSize; x++)
-        {
-            for (int y = 0; y < chunkSize; y++)
-            {
-                for (int z = 0; z < chunkSize; z++)
-                {
-                    blocks[x, y, z] = new BlockAir();
-                }
-            }
-        }
     }
 
     // Update is called once per frame
@@ -44,7 +32,6 @@ public class Chunk : MonoBehaviour
     {
         if (update)
         {
-            blocks[1, 1, 1] = new BlockGrass();
             update = false;
             UpdateChunk();
         }
@@ -90,7 +77,7 @@ public class Chunk : MonoBehaviour
     // Updates the Chunk based on its contests
     void UpdateChunk()
     {
-
+        rendered = true;
         MeshData meshData = new MeshData();
         for (int x = 0; x < chunkSize; x++)
         {

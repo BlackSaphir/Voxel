@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class WorldPos
+public struct WorldPos
 {
     public int x, y, z;
     public WorldPos(int x, int y, int z)
