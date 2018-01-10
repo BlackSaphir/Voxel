@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Terrain 
+public static class EditTerrain 
 {
     public static WorldPos GetBlockPos(Vector3 pos)
     {
