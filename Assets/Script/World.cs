@@ -6,6 +6,7 @@ public class World : MonoBehaviour
 {
     public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
     public GameObject chunkPrefab;
+    public TerrainGen terrainGen = null;
     public string worldName = "world";
 
 
@@ -24,7 +25,6 @@ public class World : MonoBehaviour
         // Add it to the chunks dictionary. Position = key
         chunks.Add(worldpos, newChunk);
 
-        var terrainGen = new TerrainGen();
         newChunk = terrainGen.ChunkGen(newChunk);
         newChunk.SetBlocksUnmodified();
         bool loaded = Serialization.Load(newChunk);

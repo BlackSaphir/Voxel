@@ -2,26 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimplexNoise;
+using NoiseTest;
 
-public class TerrainGen
+public class TerrainGen : ScriptableObject
 {
-    float stoneBaseHeight = -24;
-    float stoneBaseNoise = 0.05f;
-    float stoneBaseNoiseHeight = 4;
+    [SerializeField] float stoneBaseHeight = -24;
+    [SerializeField] float stoneBaseNoise = 0.05f;
+    [SerializeField] float stoneBaseNoiseHeight = 4;
 
-    float stoneMountainHeight = 48;
-    float stoneMountainFrequency = 0.008f;
-    float stoneMinHeight = -12;
+    [SerializeField] float stoneMountainHeight = 48;
+    [SerializeField] float stoneMountainFrequency = 0.008f;
+    [SerializeField] float stoneMinHeight = -12;
 
-    float dirtBaseHeight = 1;
-    float dirtNoise = 0.04f;
-    float dirtNoiseHeight = 3;
+    [SerializeField] float dirtBaseHeight = 1;
+    [SerializeField] float dirtNoise = 0.04f;
+    [SerializeField] float dirtNoiseHeight = 3;
 
-    float caveFrequency = 0.025f;
-    int caveSize = 7;
+    [SerializeField] float caveFrequency = 0.025f;
+    [SerializeField] float caveSize = 7;
 
-    float treeFrequency = 0.2f;
-    int treeDensity = 3;
+    [SerializeField] float treeFrequency = 0.2f;
+    [SerializeField] int treeDensity = 3;
+
+    [SerializeField] int Seed = 0;
+
+    OpenSimplexNoise noise = new OpenSimplexNoise(10);
 
 
     public Chunk ChunkGen(Chunk chunk)
@@ -76,13 +81,14 @@ public class TerrainGen
         return chunk;
     }
 
-    public static int GetNoise(int x, int y, int z, float scale, int max)
+    public int GetNoise(int x, int y, int z, float scale, int max)
     {
         //OpenSimplexNoise Penis = new OpenSimplexNoise();
-        //return Mathf.FloorToInt((Penis.Evaluate(x * scale, y * scale, z * scale) + 1f) * (max / 2f));
+        return Mathf.FloorToInt((noise.Evaluate(x * scale, y * scale, z * scale) + 1f) * (max / 2f));
 
-        return Mathf.FloorToInt((Noise.Generate(x * scale, y * scale, z * scale) + 1f) * (max / 2f));
+        //return Mathf.FloorToInt((Noise.Generate(x * scale, y * scale, z * scale) + 1f) * (max / 2f));
 
+       
 
     }
 
