@@ -26,7 +26,14 @@ public class TerrainGen : ScriptableObject
 
     [SerializeField] int Seed = 0;
 
-    OpenSimplexNoise noise = new OpenSimplexNoise(10);
+    OpenSimplexNoise noise;
+
+
+    private void OnEnable()
+    {
+        noise = new OpenSimplexNoise(Seed);
+    }
+
 
 
     public Chunk ChunkGen(Chunk chunk)

@@ -186,9 +186,9 @@ namespace NoiseTest
             return x < xi ? xi - 1 : xi;
         }
 
-        public OpenSimplexNoise()
-            : this(DateTime.Now.Ticks)
+        public OpenSimplexNoise() : this(DateTime.Now.Ticks)
         {
+
         }
 
         public OpenSimplexNoise(long seed)
