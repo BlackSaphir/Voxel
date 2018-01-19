@@ -36,6 +36,7 @@ public class TerrainGen : ScriptableObject
 
 
 
+
     public Chunk ChunkGen(Chunk chunk)
     {
         for (int x = chunk.pos.x - 3; x < chunk.pos.x + Chunk.chunkSize + 3; x++)

@@ -8,9 +8,16 @@ public class Modify : MonoBehaviour
     public float speed = 0.1f;
 
     // Update is called once per frame
+#if UNITY_STANDALONE
+   
+
+    void Start()
+    {
+        Debug.Log("PC");
+    }
+
     void Update()
     {
-#if UNITY_STANDALONE
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -29,45 +36,90 @@ public class Modify : MonoBehaviour
 
         transform.position += transform.forward * 3 * Input.GetAxis("Vertical");
         transform.position += transform.right * 3 * Input.GetAxis("Horizontal");
+    }
 
 #endif
 
 
-#if UNITY_IPHONE
+#if UNITY_IOS
+
+    //Touch touch;
+
+    //void Start()
+    //{
+    //    Debug.Log("Ipad");
+    //}
+
+    //void Update()
+    //{
+    //    Vector3 MovementVector = new Vector3(0, 0, 0);
+
+    //    if (touch.position.x < Screen.width / 2)
+    //    {
+    //        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+    //        {
+    //            MovementVector.x = Input.GetTouch(0).deltaPosition.x;
+    //            MovementVector.y = Input.GetTouch(0).deltaPosition.y;
+    //        }
+    //    }
+
+    //    if (touch.position.x > Screen.width / 2)
+    //    {
+    //        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+    //        {
+    //            transform.Rotate(new Vector3(Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y));
+    //        }
+    //    }
+
+    //}
 
 
-        int TouchID = -1;
+#endif
 
-        //Touch[]. myTouches = Input.touches;
-        
-        if (Input.touchCount > 0)
-	    {
-            foreach (Touch myTouch in Input.touches)
+#if UNITY_EDITOR
+
+
+    Touch touch;
+
+    void Start()
+    {
+        Debug.Log("PENIS");
+    }
+
+    void Update()
+    {
+        Vector3 MovementVector = new Vector3(0, 0, 0);
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            if (touch.position.x < Screen.width / 2)
             {
-                if (myTouch.phase == TouchPhase.Began)
-                {
-                    TouchID = myTouch.fingerId;
-                }
 
-                if (myTouch.phase != TouchPhase.Ended && myTouch.fingerId == TouchID)
-                {
-                    if (myTouch.position.x < Screen.width / 2) // Left side of screen
-                    {
-                        Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-                        transform.Translate(-touchDeltaPosition.x * speed, -touchDeltaPosition.y * speed, 0);
-                    }
-
-                    if (myTouch.position.x > Screen.width / 2) // Right side of screen
-                    {
-
-                    }
-                }
+                MovementVector.x = Input.GetTouch(0).deltaPosition.x * Time.deltaTime;
+                MovementVector.y = Input.GetTouch(0).deltaPosition.y * Time.deltaTime;
+                transform.Translate(MovementVector);
+                Debug.Log("MOVES");
             }
-	    }
+        }
 
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            Debug.Log(string.Format("X:{0}, Y:{1}", Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y));
 
+            if (Input.GetTouch(0).position.x > Screen.width / 2)
+            {
+                Quaternion RotateFuckingUnity = Quaternion.Euler(-Input.GetTouch(0).position.y, Input.GetTouch(0).position.x, 0);
+                //transform.Rotate(new Vector3(Input.GetTouch(0).position.y, Input.GetTouch(0).position.x) * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, RotateFuckingUnity, Time.deltaTime*2);
 
-#endif
+            }
+        }
 
     }
+
+
+
+
+#endif
+
 }
