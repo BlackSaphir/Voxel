@@ -6,6 +6,7 @@ public class Modify : MonoBehaviour
 {
     Vector2 rot;
     public float speed = 0.1f;
+    float LockZ = 0;
 
     // Update is called once per frame
 #if UNITY_STANDALONE
@@ -43,83 +44,97 @@ public class Modify : MonoBehaviour
 
 #if UNITY_IOS
 
-    //Touch touch;
-
-    //void Start()
-    //{
-    //    Debug.Log("Ipad");
-    //}
-
-    //void Update()
-    //{
-    //    Vector3 MovementVector = new Vector3(0, 0, 0);
-
-    //    if (touch.position.x < Screen.width / 2)
-    //    {
-    //        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-    //        {
-    //            MovementVector.x = Input.GetTouch(0).deltaPosition.x;
-    //            MovementVector.y = Input.GetTouch(0).deltaPosition.y;
-    //        }
-    //    }
-
-    //    if (touch.position.x > Screen.width / 2)
-    //    {
-    //        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-    //        {
-    //            transform.Rotate(new Vector3(Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y));
-    //        }
-    //    }
-
-    //}
-
-
-#endif
-
-#if UNITY_EDITOR
-
-
-    Touch touch;
+    Vector3 MovementVector = new Vector3(0, 0, 0);
 
     void Start()
     {
-        Debug.Log("PENIS");
+        Debug.Log("Ipad");
     }
 
     void Update()
     {
-        Vector3 MovementVector = new Vector3(0, 0, 0);
+        MovementVector += Physics.gravity;
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
-            if (touch.position.x < Screen.width / 2)
+            if (Input.GetTouch(0).position.x < Screen.width / 2)
             {
-
-                MovementVector.x = Input.GetTouch(0).deltaPosition.x * Time.deltaTime;
-                MovementVector.y = Input.GetTouch(0).deltaPosition.y * Time.deltaTime;
-                transform.Translate(MovementVector);
-                Debug.Log("MOVES");
+                MovePlayer();
             }
         }
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
-            Debug.Log(string.Format("X:{0}, Y:{1}", Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y));
-
-            if (Input.GetTouch(0).position.x > Screen.width / 2)
+			if (Input.GetTouch(0).position.x > Screen.width / 2)
             {
-                Quaternion RotateFuckingUnity = Quaternion.Euler(-Input.GetTouch(0).position.y, Input.GetTouch(0).position.x, 0);
-                //transform.Rotate(new Vector3(Input.GetTouch(0).position.y, Input.GetTouch(0).position.x) * Time.deltaTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, RotateFuckingUnity, Time.deltaTime*2);
-
+                RotatePlayer();
             }
         }
 
     }
 
+    void MovePlayer()
+    {
+        MovementVector.x = Input.GetTouch(0).deltaPosition.x * Time.deltaTime;
+        MovementVector.z = Input.GetTouch(0).deltaPosition.y * Time.deltaTime;
+        transform.Translate(MovementVector);
+        Debug.Log("MOVES");
+    }
 
+    void RotatePlayer()
+    {
+        Quaternion RotateFuckingUnity = Quaternion.Euler(-Input.GetTouch(0).position.y, Input.GetTouch(0).position.x, LockZ);
+        transform.rotation = Quaternion.Slerp(transform.rotation, RotateFuckingUnity, Time.deltaTime);
+        transform.rotation = RotateFuckingUnity;
+    }
 
 
 #endif
+
+//#if UNITY_EDITOR
+
+
+//    Touch touch;
+
+//    void Start()
+//    {
+//        Debug.Log("PENIS");
+//    }
+
+//    void Update()
+//    {
+//        Vector3 MovementVector = new Vector3(0, 0, 0);
+
+//        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+//        {
+//            if (touch.position.x < Screen.width / 2)
+//            {
+
+//                MovementVector.x = Input.GetTouch(0).deltaPosition.x * Time.deltaTime;
+//                MovementVector.y = Input.GetTouch(0).deltaPosition.y * Time.deltaTime;
+//                transform.Translate(MovementVector);
+//                Debug.Log("MOVES");
+//            }
+//        }
+
+//        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+//        {
+//            Debug.Log(string.Format("X:{0}, Y:{1}", Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y));
+
+//            if (Input.GetTouch(0).position.x > Screen.width / 2)
+//            {
+//                Quaternion RotateFuckingUnity = Quaternion.Euler(-Input.GetTouch(0).position.y, Input.GetTouch(0).position.x, 0);
+//                //transform.Rotate(new Vector3(Input.GetTouch(0).position.y, Input.GetTouch(0).position.x) * Time.deltaTime);
+//                transform.rotation = Quaternion.Slerp(transform.rotation, RotateFuckingUnity, Time.deltaTime*2);
+
+//            }
+//        }
+
+//    }
+
+
+
+
+//#endif
 
 }
