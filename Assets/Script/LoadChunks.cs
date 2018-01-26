@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,9 @@ public class LoadChunks : MonoBehaviour
     List<WorldPos> updateList = new List<WorldPos>();
     List<WorldPos> buildList = new List<WorldPos>();
     int timer = 0;
+    public GameObject Player_Prefab;
+    bool spawned = false;
+
 
 
     // Use this for initialization
@@ -163,6 +166,19 @@ public class LoadChunks : MonoBehaviour
                 chunk.update = true;
             }
             updateList.RemoveAt(0);
+        }
+
+        if(updateList.Count == 0)
+        {
+            if(!spawned)
+            {
+               GameObject temp = Instantiate(Player_Prefab);
+               temp.GetComponent<CapsuleCollider>().enabled = false;
+               temp.transform.position = new Vector3(0, 60, 0);
+               this.transform.SetParent(temp.transform);
+               spawned = true;
+            }
+
         }
     }
 

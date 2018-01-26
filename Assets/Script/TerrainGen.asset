@@ -22,6 +22,6 @@ MonoBehaviour:
   dirtNoiseHeight: 5
   caveFrequency: 1
   caveSize: 20
-  treeFrequency: 1
-  treeDensity: 1
+  treeFrequency: 8
+  treeDensity: 10
   Seed: 50

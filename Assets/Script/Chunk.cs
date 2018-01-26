@@ -17,7 +17,7 @@ public class Chunk : MonoBehaviour
     public WorldPos pos;
 
     MeshFilter filter;
-    MeshCollider coll;
+    public MeshCollider coll;
 
 
     // Use this for initialization
@@ -34,6 +34,7 @@ public class Chunk : MonoBehaviour
         {
             update = false;
             UpdateChunk();
+            
         }
     }
 
@@ -120,4 +121,5 @@ public class Chunk : MonoBehaviour
             block.changed = false;
         }
     }
+
 }

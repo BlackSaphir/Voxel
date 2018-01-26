@@ -23,6 +23,7 @@ public struct WorldPos
         return false;
     }
 
+
     // Generates a unique int for any WorldPos
     public override int GetHashCode()
     {
