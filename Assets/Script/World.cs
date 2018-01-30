@@ -61,7 +61,8 @@ public class World : MonoBehaviour
         }
         else
         {
-            return new BlockAir();
+            return new BlockGrass();
+            
         }
     }
 
